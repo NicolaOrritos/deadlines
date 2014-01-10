@@ -38,7 +38,7 @@
             
             console.log("Creating new deadline named '%s' for date '%s'", name, date);
             
-            // $.post("localhost:8124/deadlines/new", {"name": name, "date": date});
+            $.post("/deadlines/save", {"name": name, "date": date});
             
             
             // If POST succeeds add to the UI a new deadline:

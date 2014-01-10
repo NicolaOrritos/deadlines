@@ -6,13 +6,13 @@ var app = express();
 
 app.configure(function()
 {
+    app.use(express.bodyParser());
     app.use(express.static(__dirname + '/public'));
 });
 
 
-app.get("/save", deadlines.save);
-app.get("/del", deadlines.del);
-app.get("/", deadlines.index);
+app.post("/deadlines/save", deadlines.save);
+app.get("/deadlines/del", deadlines.del);
 
 
 app.listen(3000);
