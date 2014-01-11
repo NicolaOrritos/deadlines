@@ -1,6 +1,6 @@
 
 var Datastore = require('nedb');
-var db = new Datastore({filename: "pulses.dat", autoload: true});
+var db = new Datastore({filename: "deadlines.dat", autoload: true});
 
 
 var OK = {"status": "OK", "id": 0};
