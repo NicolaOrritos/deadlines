@@ -38,22 +38,38 @@
             
             console.log("Creating new deadline named '%s' for date '%s'", name, date);
             
-            $.post("/deadlines/save", {"name": name, "date": date});
-            
-            
-            // If POST succeeds add to the UI a new deadline:
-            var newDeadline = "<div class=\"deadline\">"
-                            + "     <a class=\"del\" href=\"#\">‒</a>"
-                            + "     <form>"
-                            + "         <input name=\"name\" type=\"text\" placeholder=\"" + name + "\" />"
-                            + "         <input name=\"date\" type=\"text\" placeholder=\"" + date + "\" />"
-                            + "     </form>"
-                            + "     <a class=\"save\" href=\"#\">+</a>"
-                            + "</div>";
-            
-            $("#deadlines").prepend(newDeadline);
-            
-            hideNewDeadline();
+            $.post("/deadlines/save", {"name": name, "date": date}, function(data)
+            {
+                if (data)
+                {
+                    console.log("POST result: '%s'", JSON.stringify(data));
+                    
+                    if (data.status)
+                    if (data.status == "OK")
+                    if (data.id)
+                    {
+                        var id = data.id;
+                        
+                        // Display this deadline with the returned ID
+                        
+                        // [todo] - Distinguish between new and already-present deadlines
+                        
+                        var newDeadline = "<div class=\"deadline\">"
+                                        + "     <a class=\"del\" href=\"#\">‒</a>"
+                                        + "     <form>"
+                                        + "         <input name=\"id\"   type=\"hidden\" value=\"" + id   + "\" />"
+                                        + "         <input name=\"name\" type=\"text\"   value=\"" + name + "\" />"
+                                        + "         <input name=\"date\" type=\"text\"   value=\"" + date + "\" />"
+                                        + "     </form>"
+                                        + "     <a class=\"save\" href=\"#\">+</a>"
+                                        + "</div>";
+                        
+                        $("#deadlines").prepend(newDeadline);
+                        
+                        hideNewDeadline();
+                    }
+                }
+            });
         });
     });
 })();
