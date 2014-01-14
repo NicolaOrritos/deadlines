@@ -11,6 +11,42 @@
         $(".deadline.new form [type=text]").val("");
     }
     
+    function newDeadlineMarkup(name, date, id)
+    {
+        var result  = "<div class=\"deadline\">"
+                    + "     <a class=\"del\" href=\"#\">‒</a>"
+                    + "     <form>"
+                    + "         <input name=\"id\"   type=\"hidden\" value=\"" + id   + "\" />"
+                    + "         <input name=\"name\" type=\"text\"   value=\"" + name + "\" />"
+                    + "         <input name=\"date\" type=\"text\"   value=\"" + date + "\" />"
+                    + "     </form>"
+                    + "     <a class=\"save\" href=\"#\">+</a>"
+                    + "</div>";
+    }
+    
+    function isDate(string)
+    {
+        var result = false;
+        
+        if ( Object.prototype.toString.call(string) === "[object Date]" )
+        {
+            if ( isNaN( d.getTime() ) )
+            {
+                result = false;
+            }
+            else
+            {
+                result = true;
+            }
+        }
+        else
+        {
+            result = false;
+        }
+        
+        return result;
+    }
+    
     
     $(document).ready(function()
     {
@@ -75,15 +111,7 @@
                         
                         // Display this deadline with the returned ID
                         
-                        var newDeadline = "<div class=\"deadline\">"
-                                        + "     <a class=\"del\" href=\"#\">‒</a>"
-                                        + "     <form>"
-                                        + "         <input name=\"id\"   type=\"hidden\" value=\"" + newId + "\" />"
-                                        + "         <input name=\"name\" type=\"text\"   value=\"" + name  + "\" />"
-                                        + "         <input name=\"date\" type=\"text\"   value=\"" + date  + "\" />"
-                                        + "     </form>"
-                                        + "     <a class=\"save\" href=\"#\">+</a>"
-                                        + "</div>";
+                        var newDeadline = newDeadlineMarkup(name, date, newId);
                         
                         if (!id)
                         {
