@@ -31,7 +31,7 @@
             hideNewDeadline();
         });
         
-        $(".deadline").on("save", function(event)
+        $("#deadlines").on("save", ".deadline", function(event)
         {
             console.log("Received event 'save' on a deadline item");
             
@@ -75,8 +75,6 @@
                         
                         // Display this deadline with the returned ID
                         
-                        // [todo] - Distinguish between new and already-present deadlines
-                        
                         var newDeadline = "<div class=\"deadline\" id=\"" + newId + "\">"
                                         + "     <a class=\"del\" href=\"#\">‒</a>"
                                         + "     <form>"
@@ -86,11 +84,7 @@
                                         + "     <a class=\"save\" href=\"#\">+</a>"
                                         + "</div>";
                         
-                        if (id)
-                        {
-                            $("#deadlines").prepend(newDeadline);
-                        }
-                        else
+                        if (id == undefined)
                         {
                             $("#deadlines").prepend(newDeadline);
                         }
@@ -99,7 +93,7 @@
             });
         });
         
-        $(".deadline .save").click(function(event)
+        $("#deadlines").on("click", ".deadline .save", function(event)
         {
             $(this).trigger("save", event);
         });
