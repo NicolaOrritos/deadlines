@@ -75,16 +75,17 @@
                         
                         // Display this deadline with the returned ID
                         
-                        var newDeadline = "<div class=\"deadline\" id=\"" + newId + "\">"
+                        var newDeadline = "<div class=\"deadline\">"
                                         + "     <a class=\"del\" href=\"#\">‒</a>"
                                         + "     <form>"
+                                        + "         <input name=\"id\"   type=\"hidden\" value=\"" + newId + "\" />"
                                         + "         <input name=\"name\" type=\"text\"   value=\"" + name  + "\" />"
                                         + "         <input name=\"date\" type=\"text\"   value=\"" + date  + "\" />"
                                         + "     </form>"
                                         + "     <a class=\"save\" href=\"#\">+</a>"
                                         + "</div>";
                         
-                        if (id == undefined)
+                        if (!id)
                         {
                             $("#deadlines").prepend(newDeadline);
                         }
