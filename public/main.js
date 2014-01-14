@@ -31,14 +31,37 @@
             hideNewDeadline();
         });
         
-        $(".deadline.new .save").click(function(event)
+        $(".deadline").on("save", function(event)
         {
-            var name = $(".deadline.new form [name=name]").val();
-            var date = $(".deadline.new form [name=date]").val();
+            console.log("Received event 'save' on a deadline item");
             
-            console.log("Creating new deadline named '%s' for date '%s'", name, date);
+            console.log("'%s'", $("input[name=name]", this)[0].value);
             
-            $.post("/deadlines/save", {"name": name, "date": date}, function(data)
+            var id   = undefined;
+            
+            if ($("input[name=id]", this).length > 0)
+            {
+                id = $("input[name=id]", this)[0].value;
+            }
+            
+            var name = $("input[name=name]", this)[0].value;
+            var date = $("input[name=date]", this)[0].value;
+            
+            if (id)
+            {
+                // Already present deadline
+                console.log("Updating already present deadline with name '%s' and date '%s'", name, date);
+                console.log(" id is '%s'", id);
+            }
+            else
+            {
+                // New deadline
+                console.log("Creating new deadline named '%s' for date '%s'", name, date);
+            }
+            
+            hideNewDeadline();
+            
+            $.post("/deadlines/save", {"id": id, "name": name, "date": date}, function(data)
             {
                 if (data)
                 {
@@ -48,28 +71,37 @@
                     if (data.status == "OK")
                     if (data.id)
                     {
-                        var id = data.id;
+                        var newId = data.id;
                         
                         // Display this deadline with the returned ID
                         
                         // [todo] - Distinguish between new and already-present deadlines
                         
-                        var newDeadline = "<div class=\"deadline\">"
+                        var newDeadline = "<div class=\"deadline\" id=\"" + newId + "\">"
                                         + "     <a class=\"del\" href=\"#\">‒</a>"
                                         + "     <form>"
-                                        + "         <input name=\"id\"   type=\"hidden\" value=\"" + id   + "\" />"
-                                        + "         <input name=\"name\" type=\"text\"   value=\"" + name + "\" />"
-                                        + "         <input name=\"date\" type=\"text\"   value=\"" + date + "\" />"
+                                        + "         <input name=\"name\" type=\"text\"   value=\"" + name  + "\" />"
+                                        + "         <input name=\"date\" type=\"text\"   value=\"" + date  + "\" />"
                                         + "     </form>"
                                         + "     <a class=\"save\" href=\"#\">+</a>"
                                         + "</div>";
                         
-                        $("#deadlines").prepend(newDeadline);
-                        
-                        hideNewDeadline();
+                        if (id)
+                        {
+                            $("#deadlines").prepend(newDeadline);
+                        }
+                        else
+                        {
+                            $("#deadlines").prepend(newDeadline);
+                        }
                     }
                 }
             });
+        });
+        
+        $(".deadline .save").click(function(event)
+        {
+            $(this).trigger("save", event);
         });
     });
 })();

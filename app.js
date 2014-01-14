@@ -11,6 +11,7 @@ app.configure(function()
 });
 
 
+app.post("/deadlines/all", deadlines.all);
 app.post("/deadlines/save", deadlines.save);
 app.get("/deadlines/del", deadlines.del);
 

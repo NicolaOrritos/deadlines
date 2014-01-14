@@ -7,6 +7,15 @@ var OK = {"status": "OK", "id": 0};
 var NOT_OK = {"status": "NOT_OK", "error": "unknown"};
 
 
+exports.all = function(req, res)
+{
+    var result = OK;
+    
+    // [todo] - Implement me please
+    
+    return result;
+}
+
 exports.save = function(req, res)
 {
     var result = OK;
