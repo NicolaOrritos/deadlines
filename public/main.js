@@ -61,6 +61,25 @@
         return result;
     }
     
+    function loadExistingDeadlines(callback)
+    {
+        var result = new Array();
+        
+        $.get("/deadlines/all", function(data)
+        {
+            // [todo] - Implement the get-all feature
+            
+            console.log("Data returned by '/deadlines/all': %s", JSON.stringify(data));
+            
+            result = data;
+            
+            if (callback)
+            {
+                callback.call(this, result);
+            }
+        });
+    }
+    
     
     $(document).ready(function()
     {
@@ -152,6 +171,20 @@
         $("#deadlines").on("click", ".deadline .save", function(event)
         {
             $(this).trigger("save", event);
+        });
+        
+        
+        loadExistingDeadlines(function(deadlines)
+        {
+            for (var a=0; a<deadlines.length; a++)
+            {
+                if (deadlines[a])
+                {
+                    var newDeadline = newDeadlineMarkup(deadlines[a].name, deadlines[a].date, deadlines[a]._id);
+                    
+                    $("#deadlines").prepend(newDeadline);
+                }
+            }
         });
     });
 })();

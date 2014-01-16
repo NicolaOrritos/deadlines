@@ -13,6 +13,18 @@ exports.all = function(req, res)
     
     // [todo] - Implement me please
     
+    db.find({}, function(err, docs)
+    {
+        if (err)
+        {
+            console.log("Could not load all the docs. Cause: %s", err);
+        }
+        else
+        {
+            res.send(docs);
+        }
+    });
+    
     return result;
 }
 
