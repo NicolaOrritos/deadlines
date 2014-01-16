@@ -100,12 +100,14 @@ h3 {
 }
 
 .deadline {
-    display: inline-block;
+    display: inline-table;
     margin: 0 10px 0 0;
     
     background: #506383;
     
-    box-shadow: 0 0 1em white;
+    -webkit-box-shadow: 0 0 1em white;
+       -moz-box-shadow: 0 0 1em white;
+            box-shadow: 0 0 1em white;
 }
 
 .deadline input, form {
