@@ -22,26 +22,40 @@
                     + "     </form>"
                     + "     <a class=\"save\" href=\"#\">+</a>"
                     + "</div>";
+        
+        return result;
     }
     
-    function isDate(string)
+    function isDate(date)
     {
         var result = false;
         
-        if ( Object.prototype.toString.call(string) === "[object Date]" )
+        if ( date )
+        if ( Object.prototype.toString.call(date) === "[object Date]" )
+        if ( ! isNaN(date.getTime()) )
         {
-            if ( isNaN( d.getTime() ) )
+            result = true;
+        }
+        
+        return result;
+    }
+    
+    function parseDate(date)
+    {
+        var result = undefined;
+        
+        if (date)
+        {
+            result = moment(date, ["DD/MM/YYYY", "MM/YYYY", "DD/MM", "YYYY", "DD-MM-YYYY", "MM-YYYY", "DD-MM"]);
+            
+            if (result.isValid())
             {
-                result = false;
+                result = result.toDate();
             }
             else
             {
-                result = true;
+                result = undefined;
             }
-        }
-        else
-        {
-            result = false;
         }
         
         return result;
@@ -81,45 +95,58 @@
             }
             
             var name = $("input[name=name]", this)[0].value;
-            var date = $("input[name=date]", this)[0].value;
+            var date = parseDate($("input[name=date]", this)[0].value);
             
-            if (id)
+            // Was an actual date?
+            if (date)
             {
-                // Already present deadline
-                console.log("Updating already present deadline with name '%s' and date '%s'", name, date);
-                console.log(" id is '%s'", id);
+                console.log("Received an actual date value: '%s'. Saving...", date);
+                
+                if (id)
+                {
+                    // Already present deadline
+                    console.log("Updating already present deadline with name '%s' and date '%s'", name, date);
+                    console.log(" id is '%s'", id);
+                }
+                else
+                {
+                    // New deadline
+                    console.log("Creating new deadline named '%s' for date '%s'", name, date);
+                }
+                
+                hideNewDeadline();
+                
+                $.post("/deadlines/save", {"id": id, "name": name, "date": date}, function(data)
+                {
+                    if (data)
+                    {
+                        console.log("POST result: '%s'", JSON.stringify(data));
+                        
+                        if (data.status)
+                        if (data.status == "OK")
+                        if (data.id)
+                        {
+                            var newId = data.id;
+                            
+                            // Display this deadline with the returned ID
+                            
+                            var newDeadline = newDeadlineMarkup(name, date, newId);
+                            
+                            if (!id)
+                            {
+                                $("#deadlines").prepend(newDeadline);
+                            }
+                        }
+                    }
+                });
             }
             else
             {
-                // New deadline
-                console.log("Creating new deadline named '%s' for date '%s'", name, date);
+                // [todo] - Show a little error message next to the deadline form and reset the date field
+                
+                console.log("Didn't receive an actual date value: '%s'. Aborting...", date);
+                console.log("Tried to parse '%s'", $("input[name=date]", this)[0].value);
             }
-            
-            hideNewDeadline();
-            
-            $.post("/deadlines/save", {"id": id, "name": name, "date": date}, function(data)
-            {
-                if (data)
-                {
-                    console.log("POST result: '%s'", JSON.stringify(data));
-                    
-                    if (data.status)
-                    if (data.status == "OK")
-                    if (data.id)
-                    {
-                        var newId = data.id;
-                        
-                        // Display this deadline with the returned ID
-                        
-                        var newDeadline = newDeadlineMarkup(name, date, newId);
-                        
-                        if (!id)
-                        {
-                            $("#deadlines").prepend(newDeadline);
-                        }
-                    }
-                }
-            });
         });
         
         $("#deadlines").on("click", ".deadline .save", function(event)
