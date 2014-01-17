@@ -38,7 +38,7 @@ exports.save = function(req, res)
         var date = req.body.date;
         var id   = req.body.id;
         
-        var doc = {"id": id, "name": name, "date": date};
+        var doc = {"name": name, "date": date};
         
         console.log("Deadline name and date: '%s' - '%s'", name, date);
         console.log("id is '%s'", id);

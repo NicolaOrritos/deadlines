@@ -50,12 +50,28 @@
             
             if (result.isValid())
             {
-                result = result.toDate();
+                // Convert to Unix time:
+                result = result.toDate().getTime();
             }
             else
             {
                 result = undefined;
             }
+        }
+        
+        return result;
+    }
+    
+    function formatDate(date)
+    {
+        var result = "";
+        
+        if (date)
+        {
+            console.log(("" + date).substr(0, 6));
+            
+            var obj = new Date(parseInt(("" + date).substr(0, 6)));
+            result = obj.toLocaleDateString();
         }
         
         return result;
@@ -135,6 +151,7 @@
                 
                 hideNewDeadline();
                 
+                
                 $.post("/deadlines/save", {"id": id, "name": name, "date": date}, function(data)
                 {
                     if (data)
@@ -149,7 +166,7 @@
                             
                             // Display this deadline with the returned ID
                             
-                            var newDeadline = newDeadlineMarkup(name, date, newId);
+                            var newDeadline = newDeadlineMarkup(name, formatDate(date), newId);
                             
                             if (!id)
                             {
@@ -180,7 +197,7 @@
             {
                 if (deadlines[a])
                 {
-                    var newDeadline = newDeadlineMarkup(deadlines[a].name, deadlines[a].date, deadlines[a]._id);
+                    var newDeadline = newDeadlineMarkup(deadlines[a].name, formatDate(deadlines[a].date), deadlines[a]._id);
                     
                     $("#deadlines").prepend(newDeadline);
                 }
