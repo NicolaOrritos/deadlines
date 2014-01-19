@@ -13,7 +13,7 @@ app.configure(function()
 
 app.get ("/deadlines/all",  deadlines.all);
 app.post("/deadlines/save", deadlines.save);
-app.get ("/deadlines/del",  deadlines.del);
+app.del ("/deadlines/:id/del",  deadlines.del);
 
 
 app.listen(3000);

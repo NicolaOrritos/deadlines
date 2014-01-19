@@ -106,13 +106,37 @@ exports.save = function(req, res)
 exports.del = function(req, res)
 {
     var result = NOT_OK;
-    result.error = "not implemented";
     
+    var id = req.params.id;
     
-    // TODO
-    
-    
-    console.log("Sending result: '%s'", JSON.stringify(result));
-    
-    res.send(result);
+    if (id)
+    {
+        db.remove({_id: id}, {}, function(err, numRemoved)
+        {
+            if (err)
+            {
+                result.error = err;
+            }
+            else
+            {
+                if (numRemoved > 0)
+                {
+                    result = OK;
+                    result.id = id;
+                }
+            }
+            
+            console.log("Sending result: '%s'", JSON.stringify(result));
+        
+            res.send(result);
+        });
+    }
+    else
+    {
+        result.error = "empty request";
+        
+        console.log("Sending result: '%s'", JSON.stringify(result));
+        
+        res.send(result);
+    }
 };

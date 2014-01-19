@@ -68,10 +68,13 @@
         
         if (date)
         {
-            console.log(("" + date).substr(0, 6));
+            var int = parseInt(date);
             
-            var obj = new Date(parseInt(("" + date).substr(0, 6)));
-            result = obj.toLocaleDateString();
+            if (!isNaN(int))
+            {
+                var obj = new Date(int);
+                result = obj.toLocaleDateString();
+            }
         }
         
         return result;
@@ -94,6 +97,30 @@
                 callback.call(this, result);
             }
         });
+    }
+    
+    function reload(deadlines)
+    {
+        if (deadlines)
+        {
+            $("#deadlines .deadline").each( function(count, deadline)
+            {
+                if (!deadline.classList.contains("new"))
+                {
+                    $(deadline).remove();
+                }
+            });
+        }
+        
+        for (var a=0; a<deadlines.length; a++)
+        {
+            if (deadlines[a])
+            {
+                var newDeadline = newDeadlineMarkup(deadlines[a].name, formatDate(deadlines[a].date), deadlines[a]._id);
+                
+                $("#deadlines").prepend(newDeadline);
+            }
+        }
     }
     
     
@@ -120,13 +147,12 @@
         {
             console.log("Received event 'save' on a deadline item");
             
-            console.log("'%s'", $("input[name=name]", this)[0].value);
-            
             var id   = undefined;
+            var val  = $("input[name=id]", this);
             
-            if ($("input[name=id]", this).length > 0)
+            if (val.length > 0)
             {
-                id = $("input[name=id]", this)[0].value;
+                id = val[0].value;
             }
             
             var name = $("input[name=name]", this)[0].value;
@@ -185,23 +211,57 @@
             }
         });
         
+        $("#deadlines").on("del", ".deadline", function(event)
+        {
+            console.log("Received event 'del' on a deadline item");
+            
+            var id   = undefined;
+            var val  = $("input[name=id]", this);
+            
+            if (val.length > 0)
+            {
+                id = val[0].value;
+            }
+            
+            console.log("id: '%s'", id);
+            
+            if (id)
+            {
+                $.ajax("/deadlines/" + id + "/del", {"type": "DELETE"}).success(function(data, result)
+                {
+                    console.log("data: '%s'", JSON.stringify(data));
+                    console.log("result: '%s'", result);
+                    
+                    if (result == "success")
+                    {
+                        console.log("Deleted %s deadlines", result);
+                        
+                        loadExistingDeadlines(reload);
+                    }
+                    else
+                    {
+                        console.log("Error while deleting '%s': '%s'", id, err);
+                    }
+                    
+                }).error(function(err)
+                {
+                    console.log("Error while deleting '%s': '%s'", id, err);
+                });
+            }
+        });
+        
+        
         $("#deadlines").on("click", ".deadline .save", function(event)
         {
             $(this).trigger("save", event);
         });
         
-        
-        loadExistingDeadlines(function(deadlines)
+        $("#deadlines").on("click", ".deadline .del", function(event)
         {
-            for (var a=0; a<deadlines.length; a++)
-            {
-                if (deadlines[a])
-                {
-                    var newDeadline = newDeadlineMarkup(deadlines[a].name, formatDate(deadlines[a].date), deadlines[a]._id);
-                    
-                    $("#deadlines").prepend(newDeadline);
-                }
-            }
+            $(this).trigger("del", event);
         });
+        
+        
+        loadExistingDeadlines(reload);
     });
 })();
