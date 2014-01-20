@@ -1,6 +1,9 @@
 
 (function()
 {
+    // Default locale:
+    var locale = "it-IT";
+    
     function hideNewDeadline()
     {
         $(".deadline.new form").hide();
@@ -73,7 +76,10 @@
             if (!isNaN(int))
             {
                 var obj = new Date(int);
-                result = obj.toLocaleDateString();
+                
+                result = obj.toLocaleString(locale);
+                
+                // result = obj.toLocaleDateString();
             }
         }
         
@@ -123,9 +129,18 @@
         }
     }
     
+    function detectLocale()
+    {
+        // [todo] - Detect locale
+        
+        locale = "it-IT";
+    }
+    
     
     $(document).ready(function()
     {
+        detectLocale();
+        
         $(".deadline.new form").hide();
         $(".deadline.new .hide").hide();
         $(".deadline.new .save").hide();
@@ -260,6 +275,31 @@
         {
             $(this).trigger("del", event);
         });
+        
+        
+        function keypressHandler(event)
+        {
+            var key = event.which || event.keyCode;
+            
+            console.log("Key pressed: %s", key);
+            
+            switch (key)
+            {
+                // RETURN
+                case 13:
+                {
+                    console.log("Submitted form");
+                    
+                    $(this).trigger("save", event);
+                }
+                break;
+                
+                default:
+                break;
+            }
+        }
+        
+        $("#deadlines").on("keypress", ".deadline form input", keypressHandler);
         
         
         loadExistingDeadlines(reload);

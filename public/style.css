@@ -128,7 +128,7 @@ h3 {
 }
 
 .deadline input[name=date] {
-    width: 6em;
+    width: 12em;
 }
 
 .new {
