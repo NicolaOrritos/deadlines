@@ -86,19 +86,60 @@
         return result;
     }
     
+    function order(data, reverse)
+    {
+        var ordered = undefined;
+        
+        if (Array.isArray(data))
+        {
+            data.sort(function(a, b)
+            {
+                var result = 0;
+                
+                if (a)
+                if (b)
+                if (a.date)
+                if (b.date)
+                {
+                    var aDate = parseInt(a.date);
+                    var bDate = parseInt(b.date);
+                    
+                    result = aDate - bDate;
+                }
+                
+                if (reverse)
+                {
+                    result = result * -1;
+                }
+                
+                return result;
+            });
+            
+            ordered = data;
+        }
+        else
+        {
+            ordered = new Array();
+        }
+        
+        return ordered;
+    }
+    
     function loadExistingDeadlines(callback)
     {
-        var result = new Array();
-        
         $.get("/deadlines/all", function(data)
         {
             // [todo] - Implement the get-all feature
             
             console.log("Data returned by '/deadlines/all': %s", JSON.stringify(data));
             
-            result = data;
+            // We reverse the order because a "prepend" strategy is used when adding deadlines markup to the page
+            var result = order(data, true);
+            
+            console.log("Data ordered: %s", JSON.stringify(result));
             
             if (callback)
+            if (data)
             {
                 callback.call(this, result);
             }
