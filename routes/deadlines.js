@@ -11,8 +11,6 @@ exports.all = function(req, res)
 {
     var result = OK;
     
-    // [todo] - Implement me please
-    
     db.find({}, function(err, docs)
     {
         if (err)

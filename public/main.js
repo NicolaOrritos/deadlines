@@ -129,8 +129,6 @@
     {
         $.get("/deadlines/all", function(data)
         {
-            // [todo] - Implement the get-all feature
-            
             console.log("Data returned by '/deadlines/all': %s", JSON.stringify(data));
             
             // We reverse the order because a "prepend" strategy is used when adding deadlines markup to the page
