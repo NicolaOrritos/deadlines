@@ -55,13 +55,13 @@ html {
     height: 100%;
     
     background: #becadd; /* Old browsers */
-    background: -moz-linear-gradient(top,  #becadd 0%, #8496b5 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#becadd), color-stop(100%,#8496b5)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #becadd 0%,#8496b5 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #becadd 0%,#8496b5 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #becadd 0%,#8496b5 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #becadd 0%,#8496b5 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#becadd', endColorstr='#8496b5',GradientType=0 ); /* IE6-9 */
+    background: -moz-linear-gradient(top,  #becadd 0%, #44546f 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#becadd), color-stop(100%,#44546f)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #becadd 0%,#44546f 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #becadd 0%,#44546f 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #becadd 0%,#44546f 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #becadd 0%,#44546f 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#becadd', endColorstr='#44546f',GradientType=0 ); /* IE6-9 */
 }
 
 body {
@@ -105,9 +105,9 @@ h3 {
     
     background: #506383;
     
-    -webkit-box-shadow: 0 0 1em white;
-       -moz-box-shadow: 0 0 1em white;
-            box-shadow: 0 0 1em white;
+    -webkit-box-shadow: 0 0.1em 0.25em 0.125em #2e3848;
+       -moz-box-shadow: 0 0.1em 0.25em 0.125em #2e3848;
+            box-shadow: 0 0.1em 0.25em 0.125em #2e3848;
 }
 
 .deadline input, form {
@@ -124,10 +124,14 @@ h3 {
 }
 
 .deadline input[name=name] {
+    margin-left: 0.5em;
+    padding-left: 0.5em;
     width: 8em;
 }
 
 .deadline input[name=date] {
+    margin-left: 0.5em;
+    padding-left: 0.5em;
     width: 12em;
 }
 
