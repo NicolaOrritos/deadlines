@@ -9,21 +9,23 @@ var NOT_OK = {"status": "NOT_OK", "error": "unknown"};
 
 exports.all = function(req, res)
 {
-    var result = OK;
+    var result = undefined;
     
     db.find({}, function(err, docs)
     {
         if (err)
         {
             console.log("Could not load all the docs. Cause: %s", err);
+            
+            result = new Array();
         }
         else
         {
-            res.send(docs);
+            result = docs;
         }
+        
+        res.send(docs);
     });
-    
-    return result;
 }
 
 exports.save = function(req, res)
