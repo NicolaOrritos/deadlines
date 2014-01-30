@@ -125,8 +125,22 @@
         return ordered;
     }
     
+    function showSpinner()
+    {
+        $(".spinner-placeholder").hide();
+        $(".spinner").show();
+    }
+    
+    function hideSpinner()
+    {
+        $(".spinner").hide();
+        $(".spinner-placeholder").show();
+    }
+    
     function loadExistingDeadlines(callback)
     {
+        showSpinner();
+        
         $.get("/deadlines/all", function(data)
         {
             console.log("Data returned by '/deadlines/all': %s", JSON.stringify(data));
@@ -136,10 +150,13 @@
             
             console.log("Data ordered: %s", JSON.stringify(result));
             
-            if (callback)
-            if (data)
+            if (callback && data)
             {
                 callback.call(this, result);
+            }
+            else
+            {
+                hideSpinner();
             }
         });
     }
@@ -166,6 +183,8 @@
                 $("#deadlines").prepend(newDeadline);
             }
         }
+        
+        hideSpinner();
     }
     
     function detectLocale()
