@@ -127,14 +127,12 @@
     
     function showSpinner()
     {
-        $(".spinner-placeholder").hide();
-        $(".spinner").show();
+        $(".spinner").addClass("spinner-animated");
     }
     
     function hideSpinner()
     {
-        $(".spinner").hide();
-        $(".spinner-placeholder").show();
+        $(".spinner").removeClass("spinner-animated");
     }
     
     function loadExistingDeadlines(callback)

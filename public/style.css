@@ -172,23 +172,11 @@ a.add, a.hide, a.save, a.del {
     -webkit-box-shadow: 0 0.1em 0.25em #2e3848;
        -moz-box-shadow: 0 0.1em 0.25em #2e3848;
             box-shadow: 0 0.1em 0.25em #2e3848;
-    
-    -webkit-animation: rotateplane 1.2s infinite ease-in-out;
-    animation: rotateplane 1.2s infinite ease-in-out;
 }
 
-.spinner-placeholder {
-    display: inline-block;
-    
-    width:  1.75em;
-    height: 1.75em;
-    background-color: #4f5664;
-    
-    margin: 0 12px -4px 0;
-    
-    -webkit-box-shadow: 0 0.1em 0.25em #2e3848;
-       -moz-box-shadow: 0 0.1em 0.25em #2e3848;
-            box-shadow: 0 0.1em 0.25em #2e3848;
+.spinner-animated {
+    -webkit-animation: rotateplane 1.2s infinite ease-in-out;
+    animation: rotateplane 1.2s infinite ease-in-out;
 }
 
 @-webkit-keyframes rotateplane {
