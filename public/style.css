@@ -4,19 +4,7 @@
    License: none (public domain)
 */
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
+* {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -91,7 +79,7 @@ h3 {
     display: none;
 }
 
-#content {
+#title {
     padding: 2em;
 }
 
@@ -100,7 +88,8 @@ h3 {
 }
 
 #deadlines {
-    padding-top: 1.75em;
+    display: table;
+    padding: 2em;
     margin-left: 0.1em;
 }
 
@@ -200,21 +189,39 @@ a.add, a.hide, a.save, a.del {
 
 #months {
     display: block;
-    position: absolute;
-    bottom: 0;
-    
-    padding: 1em 0 1em 0;
-    
     width: 100%;
     
-    box-shadow: inset 1px 4px 20px -6px #090b0f;
-    
     background-color: #384355;
+    box-shadow: inset 1px 4px 20px -4px #090b0f;
+    
+    /* Animation */
+    -webkit-transition: height 0.65s ease;
+       -moz-transition: height 0.65s ease;
+         -o-transition: height 0.65s ease;
+        -ms-transition: height 0.65s ease;
+            transition: height 0.65s ease;
+}
+
+.collapsed {
+    height: 0px;
+    overflow: hidden;
+    padding: 0px;
+    list-style-type: none;
+}
+
+.expanded {
+    height: 2.8em;
 }
 
 .month {
+    position: relative;
+    top: 1em;
     display: inline-block;
     width: 7.8%;
+    
+    padding-bottom: 1em;
+    
+    text-shadow: 0.075em 0.075em #12151a;
     
     text-align: center;
 }

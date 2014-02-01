@@ -359,5 +359,7 @@
         
         
         loadExistingDeadlines(reload);
+        
+        $("#months").addClass("expanded");
     });
 })();
