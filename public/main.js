@@ -27,8 +27,8 @@
                     + "         <input name=\"date\"  type=\"text\"   value=\"" + date  + "\" />"
                     + "         <input name=\"notes\" type=\"text\"   value=\"" + notes + "\" />"
                     + "     </form>"
-                    + "     <a class=\"more hidden\" href=\"#\">v</a>"
-                    + "     <a class=\"less hidden\" href=\"#\">A</a>"
+                    + "     <a class=\"more\" href=\"#\">v</a>"
+                    + "     <a class=\"less\" href=\"#\">A</a>"
                     + "     <a class=\"save\" href=\"#\">+</a>"
                     + "</div>";
         
@@ -84,8 +84,6 @@
                 var obj = new Date(int);
                 
                 result = obj.toLocaleString(locale);
-                
-                // result = obj.toLocaleDateString();
             }
         }
         
@@ -188,6 +186,9 @@
             }
         }
         
+        $(".deadline .less").hide();
+        $(".deadline input[name=notes]").hide();
+        
         hideSpinner();
     }
     
@@ -224,23 +225,23 @@
             $(".deadline.new input[name=notes]").hide();
         });
         
-        $(".deadline.new .more").click(function(event)
-        {
-            $(".deadline.new input[name=notes]").show();
-            $(".deadline.new .more").hide();
-            $(".deadline.new .less").show();
-        });
-        
-        $(".deadline.new .less").click(function(event)
-        {
-            $(".deadline.new input[name=notes]").hide();
-            $(".deadline.new .more").show();
-            $(".deadline.new .less").hide();
-        });
-        
         $(".deadline.new .hide").click(function(event)
         {
             hideNewDeadline();
+        });
+        
+        $("#deadlines").on("more", ".deadline", function(event)
+        {
+            $("input[name=notes]", this).show();
+            $(".more", this).hide();
+            $(".less", this).show();
+        });
+        
+        $("#deadlines").on("less", ".deadline", function(event)
+        {
+            $("input[name=notes]", this).hide();
+            $(".more", this).show();
+            $(".less", this).hide();
         });
         
         $("#deadlines").on("save", ".deadline", function(event)
@@ -290,16 +291,7 @@
                         if (data.status == "OK")
                         if (data.id)
                         {
-                            var newId = data.id;
-                            
-                            // Display this deadline with the returned ID
-                            
-                            var newDeadline = newDeadlineMarkup(newId, name, formatDate(date), notes);
-                            
-                            if (!id)
-                            {
-                                $("#deadlines").prepend(newDeadline);
-                            }
+                            loadExistingDeadlines(reload);
                         }
                     }
                 });
@@ -361,6 +353,16 @@
         $("#deadlines").on("click", ".deadline .del", function(event)
         {
             $(this).trigger("del", event);
+        });
+        
+        $("#deadlines").on("click", ".deadline .more", function(event)
+        {
+            $(this).trigger("more", event);
+        });
+        
+        $("#deadlines").on("click", ".deadline .less", function(event)
+        {
+            $(this).trigger("less", event);
         });
         
         
