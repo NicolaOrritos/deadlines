@@ -188,6 +188,8 @@ h3 {
     margin: 10px 10px 10px 0;
     
     background: #506383;
+    
+    vertical-align: top;
 }
 
 .deadline input, form {
@@ -217,14 +219,25 @@ h3 {
     width: auto;
 }
 
+.deadline input[name=notes] {
+    display: block;
+    clear: both;
+    margin: 0.5em 1.10em 0.5em 1.10em;
+    
+    height: auto;
+    width: 100%;
+}
+
 .new {
     color: #a2adbf;
 }
 
-a.add, a.hide, a.save, a.del {
+a.add, a.hide, a.save, a.del, a.more, a.less {
     display: inline-block;
     width: 1.10em;
     height: 1.10em;
+    
+    vertical-align: top;
     
     color: #becadd;
     font-size: 1.25em;

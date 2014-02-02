@@ -24,8 +24,8 @@ exports.all = function(req, res)
             result = docs;
         }
         
-        // res.send(docs);
-        setInterval(function(){res.send(docs);}, 3000);
+        res.send(docs);
+        // setInterval(function(){res.send(docs);}, 3000);
     });
 }
 

@@ -10,20 +10,25 @@
         $(".deadline.new form").hide();
         $(".deadline.new .save").hide();
         $(".deadline.new .hide").hide();
+        $(".deadline.new .more").hide();
+        $(".deadline.new .less").hide();
         $(".deadline.new .add").show();
         
         $(".deadline.new form [type=text]").val("");
     }
     
-    function newDeadlineMarkup(name, date, id)
+    function newDeadlineMarkup(id, name, date, notes)
     {
         var result  = "<div class=\"deadline\">"
                     + "     <a class=\"del\" href=\"#\">‒</a>"
                     + "     <form>"
-                    + "         <input name=\"id\"   type=\"hidden\" value=\"" + id   + "\" />"
-                    + "         <input name=\"name\" type=\"text\"   value=\"" + name + "\" />"
-                    + "         <input name=\"date\" type=\"text\"   value=\"" + date + "\" />"
+                    + "         <input name=\"id\"    type=\"hidden\" value=\"" + id    + "\" />"
+                    + "         <input name=\"name\"  type=\"text\"   value=\"" + name  + "\" />"
+                    + "         <input name=\"date\"  type=\"text\"   value=\"" + date  + "\" />"
+                    + "         <input name=\"notes\" type=\"text\"   value=\"" + notes + "\" />"
                     + "     </form>"
+                    + "     <a class=\"more hidden\" href=\"#\">v</a>"
+                    + "     <a class=\"less hidden\" href=\"#\">A</a>"
                     + "     <a class=\"save\" href=\"#\">+</a>"
                     + "</div>";
         
@@ -177,7 +182,7 @@
         {
             if (deadlines[a])
             {
-                var newDeadline = newDeadlineMarkup(deadlines[a].name, formatDate(deadlines[a].date), deadlines[a]._id);
+                var newDeadline = newDeadlineMarkup(deadlines[a]._id, deadlines[a].name, formatDate(deadlines[a].date), deadlines[a].notes);
                 
                 $("#deadlines").prepend(newDeadline);
             }
@@ -206,17 +211,31 @@
     $(document).ready(function()
     {
         detectLocale();
-        
-        $(".deadline.new form").hide();
-        $(".deadline.new .hide").hide();
-        $(".deadline.new .save").hide();
+        hideNewDeadline();
         
         $(".deadline.new .add").click(function(event)
         {
             $(".deadline.new form").show();
             $(".deadline.new .save").show();
             $(".deadline.new .hide").show();
+            $(".deadline.new .more").show();
+            $(".deadline.new .less").hide();
             $(".deadline.new .add").hide();
+            $(".deadline.new input[name=notes]").hide();
+        });
+        
+        $(".deadline.new .more").click(function(event)
+        {
+            $(".deadline.new input[name=notes]").show();
+            $(".deadline.new .more").hide();
+            $(".deadline.new .less").show();
+        });
+        
+        $(".deadline.new .less").click(function(event)
+        {
+            $(".deadline.new input[name=notes]").hide();
+            $(".deadline.new .more").show();
+            $(".deadline.new .less").hide();
         });
         
         $(".deadline.new .hide").click(function(event)
@@ -236,8 +255,9 @@
                 id = val[0].value;
             }
             
-            var name = $("input[name=name]", this)[0].value;
-            var date = parseDate($("input[name=date]", this)[0].value);
+            var name  = $("input[name=name]", this)[0].value;
+            var date  = parseDate($("input[name=date]", this)[0].value);
+            var notes = $("input[name=notes]", this)[0].value;
             
             // Was an actual date?
             if (date)
@@ -249,17 +269,18 @@
                     // Already present deadline
                     console.log("Updating already present deadline with name '%s' and date '%s'", name, date);
                     console.log(" id is '%s'", id);
+                    console.log(" notes are '%s'", notes);
                 }
                 else
                 {
                     // New deadline
-                    console.log("Creating new deadline named '%s' for date '%s'", name, date);
+                    console.log("Creating new deadline named '%s' for date '%s' and notes '%s'", name, date, notes);
                 }
                 
                 hideNewDeadline();
                 
                 
-                $.post("/deadlines/save", {"id": id, "name": name, "date": date}, function(data)
+                $.post("/deadlines/save", {"id": id, "name": name, "date": date, "notes": notes}, function(data)
                 {
                     if (data)
                     {
@@ -273,7 +294,7 @@
                             
                             // Display this deadline with the returned ID
                             
-                            var newDeadline = newDeadlineMarkup(name, formatDate(date), newId);
+                            var newDeadline = newDeadlineMarkup(newId, name, formatDate(date), notes);
                             
                             if (!id)
                             {
