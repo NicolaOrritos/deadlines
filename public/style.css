@@ -83,6 +83,14 @@ h3 {
     padding: 2em;
 }
 
+#title div, h1 {
+    display: inline-block;
+}
+
+#content {
+    display: table;
+}
+
 #content h1 {
     display: inline-block;
 }
@@ -190,9 +198,13 @@ a.add, a.hide, a.save, a.del {
 #months {
     display: block;
     width: 100%;
+    padding: 0px;
     
     background-color: #384355;
-    box-shadow: inset 1px 4px 20px -4px #090b0f;
+    box-shadow: inset 1px 2px 4px  -2px #01050b,
+                inset 1px 4px 20px -4px #090b0f;
+    
+    border-bottom: 1px solid #d1dbea;
     
     /* Animation */
     -webkit-transition: height 0.65s ease;
@@ -205,8 +217,6 @@ a.add, a.hide, a.save, a.del {
 .collapsed {
     height: 0px;
     overflow: hidden;
-    padding: 0px;
-    list-style-type: none;
 }
 
 .expanded {
@@ -215,17 +225,24 @@ a.add, a.hide, a.save, a.del {
 
 .month {
     position: relative;
-    top: 1em;
+    top: 0;
     display: inline-block;
-    width: 7.8%;
     
-    padding-bottom: 1em;
+    width: 7.4%;
     
-    text-shadow: 0.075em 0.075em #12151a;
+    padding: 1em 0.25em;
+    
+    text-shadow: 0.05em 0.05em #596271;
     
     text-align: center;
 }
 
 .month a {
     color: #a2adbf;
+}
+
+.month.selected {
+    border-bottom: 1px solid #d1dbea;
+    
+    background: #465165;
 }

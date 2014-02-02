@@ -3,6 +3,7 @@
 {
     // Default locale:
     var locale = "it-IT";
+    var months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
     
     function hideNewDeadline()
     {
@@ -192,6 +193,15 @@
         locale = "it-IT";
     }
     
+    function highlightCurrentMonth()
+    {
+        var currMonth = months[(new Date()).getMonth()];
+        
+        console.log("Current month: %s", currMonth);
+        
+        $("#months #" + currMonth).addClass("selected");
+    }
+    
     
     $(document).ready(function()
     {
@@ -361,5 +371,7 @@
         loadExistingDeadlines(reload);
         
         $("#months").addClass("expanded");
+        
+        highlightCurrentMonth();
     });
 })();
