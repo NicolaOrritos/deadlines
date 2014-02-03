@@ -21,16 +21,16 @@
     function newDeadlineMarkup(id, name, date, notes)
     {
         var result  = "<div class=\"deadline\">"
-                    + "     <a class=\"del\" href=\"#\">‒</a>"
+                    + "     <a class=\"del\" href=\"#\"><img src=\"images/del.png\"></img></a>"
                     + "     <form>"
                     + "         <input    name=\"id\"    type=\"hidden\" value=\"" + id    + "\" />"
                     + "         <input    name=\"name\"  type=\"text\"   value=\"" + name  + "\" />"
                     + "         <input    name=\"date\"  type=\"text\"   value=\"" + date  + "\" />"
                     + "         <textarea name=\"notes\">" + notes + "</textarea>"
                     + "     </form>"
-                    + "     <a class=\"more\" href=\"#\">v</a>"
-                    + "     <a class=\"less\" href=\"#\">A</a>"
-                    + "     <a class=\"save\" href=\"#\">+</a>"
+                    + "     <a class=\"more\" href=\"#\"><img src=\"images/more.png\"></img></a>"
+                    + "     <a class=\"less\" href=\"#\"><img src=\"images/less.png\"></img></a>"
+                    + "     <a class=\"save\" href=\"#\"><img src=\"images/save.png\"></img></a>"
                     + "</div>";
         
         console.log("Resulting markup: %s", result);
