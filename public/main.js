@@ -58,6 +58,8 @@
         
         if (date)
         {
+            console.log("Parsing date by using Locale '%s'...", Date.getLocale());
+            
             result = Date.future(date);
             
             if (result.isValid())
@@ -204,6 +206,8 @@
         // [todo] - Detect locale
         
         locale = "it-IT";
+        
+        Date.setLocale(locale);
     }
     
     function highlightCurrentMonth()
