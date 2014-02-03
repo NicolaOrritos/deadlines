@@ -58,15 +58,19 @@
         
         if (date)
         {
-            result = moment(date, ["DD/MM/YYYY", "MM/YYYY", "DD/MM", "YYYY", "DD-MM-YYYY", "MM-YYYY", "DD-MM"]);
+            result = Date.future(date);
             
             if (result.isValid())
             {
+                console.log("Parsed successfully: '%s'", result);
+                
                 // Convert to Unix time:
-                result = result.toDate().getTime();
+                result = result.getTime();
             }
             else
             {
+                console.log("Could not parse '%s'", date);
+                
                 result = undefined;
             }
         }
