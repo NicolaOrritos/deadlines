@@ -35,11 +35,12 @@ exports.save = function(req, res)
     
     if (req.body)
     {
-        var name = req.body.name;
-        var date = req.body.date;
+        var name  = req.body.name;
+        var date  = req.body.date;
+        var notes = req.body.notes;
         var id   = req.body.id;
         
-        var doc = {"name": name, "date": date};
+        var doc = {"name": name, "date": date, "notes": notes};
         
         console.log("Deadline name and date: '%s' - '%s'", name, date);
         console.log("id is '%s'", id);

@@ -15,6 +15,7 @@
         $(".deadline.new .add").show();
         
         $(".deadline.new form [type=text]").val("");
+        $(".deadline.new form textarea").val("");
     }
     
     function newDeadlineMarkup(id, name, date, notes)
@@ -22,15 +23,17 @@
         var result  = "<div class=\"deadline\">"
                     + "     <a class=\"del\" href=\"#\">‒</a>"
                     + "     <form>"
-                    + "         <input name=\"id\"    type=\"hidden\" value=\"" + id    + "\" />"
-                    + "         <input name=\"name\"  type=\"text\"   value=\"" + name  + "\" />"
-                    + "         <input name=\"date\"  type=\"text\"   value=\"" + date  + "\" />"
-                    + "         <input name=\"notes\" type=\"text\"   value=\"" + notes + "\" />"
+                    + "         <input    name=\"id\"    type=\"hidden\" value=\"" + id    + "\" />"
+                    + "         <input    name=\"name\"  type=\"text\"   value=\"" + name  + "\" />"
+                    + "         <input    name=\"date\"  type=\"text\"   value=\"" + date  + "\" />"
+                    + "         <textarea name=\"notes\">" + notes + "</textarea>"
                     + "     </form>"
                     + "     <a class=\"more\" href=\"#\">v</a>"
                     + "     <a class=\"less\" href=\"#\">A</a>"
                     + "     <a class=\"save\" href=\"#\">+</a>"
                     + "</div>";
+        
+        console.log("Resulting markup: %s", result);
         
         return result;
     }
@@ -187,7 +190,7 @@
         }
         
         $(".deadline .less").hide();
-        $(".deadline input[name=notes]").hide();
+        $(".deadline textarea[name=notes]").hide();
         
         hideSpinner();
     }
@@ -222,7 +225,7 @@
             $(".deadline.new .more").show();
             $(".deadline.new .less").hide();
             $(".deadline.new .add").hide();
-            $(".deadline.new input[name=notes]").hide();
+            $(".deadline.new textarea[name=notes]").hide();
         });
         
         $(".deadline.new .hide").click(function(event)
@@ -232,14 +235,14 @@
         
         $("#deadlines").on("more", ".deadline", function(event)
         {
-            $("input[name=notes]", this).show();
+            $("textarea[name=notes]", this).show();
             $(".more", this).hide();
             $(".less", this).show();
         });
         
         $("#deadlines").on("less", ".deadline", function(event)
         {
-            $("input[name=notes]", this).hide();
+            $("textarea[name=notes]", this).hide();
             $(".more", this).show();
             $(".less", this).hide();
         });
@@ -258,7 +261,7 @@
             
             var name  = $("input[name=name]", this)[0].value;
             var date  = parseDate($("input[name=date]", this)[0].value);
-            var notes = $("input[name=notes]", this)[0].value;
+            var notes = $("textarea[name=notes]", this)[0].value;
             
             // Was an actual date?
             if (date)

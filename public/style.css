@@ -192,7 +192,7 @@ h3 {
     vertical-align: top;
 }
 
-.deadline input, form {
+.deadline input, .deadline form, .deadline textarea {
     display: inline-block;
     
     border: none;
@@ -219,13 +219,15 @@ h3 {
     width: auto;
 }
 
-.deadline input[name=notes] {
+.deadline textarea[name=notes] {
     display: block;
     clear: both;
     margin: 0.5em 1.10em 0.5em 1.10em;
     
-    height: auto;
     width: 100%;
+    min-height: 4em;
+    
+    overflow: visible;
 }
 
 .new {
